@@ -513,7 +513,7 @@ class Material:
             qs = (self._invmu @ np.cross(ks, ps).reshape((4, 3, 1)) / k0).reshape(
                 (4, 3)
             )  # no Z_0
-            kzs, ps, qs = sort_modes(kzs, ps, qs)
+            kzs, ps, qs = _sort_modes(kzs, ps, qs)
             self.kzs[i, j, :] = kzs
             self.ps[i, j, :, :] = ps
             self.qs[i, j, :, :] = qs
@@ -667,7 +667,7 @@ def dyn_mat(ps, qs):
     return res
 
 
-def sort_modes(kzs, ps, qs):
+def _sort_modes(kzs, ps, qs):
     """Sort the modes
 
     The modes are separated in forward and backward propagating (decaying) modes. The
