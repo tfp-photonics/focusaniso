@@ -126,12 +126,12 @@ class Grid2D:
             rhomeasure[:, 1:-1] = rhosq[:, 2:] - rhosq[:, :-2]
             rhomeasure[:, 0] = rhosq[:, 1] - rhosq[:, 0]
             rhomeasure[:, -1] = rhosq[:, -1] - rhosq[:, -2]
-            phidiff = np.diff(
+            phidiff = np.mod(np.diff(
                 self.pos[1],
                 prepend=self.pos[1][-1, -1] - 2 * np.pi,
                 append=self.pos[1][0, -1] + 2 * np.pi,
                 axis=0,
-            )
+            ), 2 * np.pi)
             measure = 0.125 * rhomeasure * (phidiff[1:, :] + phidiff[:-1, :])
         measure = measure.reshape(measure.shape + (1,))
         return np.sum(self.grid * weights * measure, axis=(0, 1))
@@ -225,39 +225,28 @@ class Spectrum(Grid2D):
         cp, sp = np.cos(phi), np.sin(phi)
         st = rho / f
         ct = np.sqrt(1 - st * st)
-        # pref = (
-        #     np.sqrt(ct * n1 / n2) # energy conservation on projection
-        #     * (-1j) * f
-        #     * np.exp(1j * self.k0 * n2 * f)
-        #     / (2 * np.pi * self.k0 * n2 * ct) # go to angular far field
-        # )
         pref = (
-            np.sqrt(ct * n1 / n2)
-            * (1j)
-            * f
-            * np.exp(-1j * self.k0 * n2 * f)
-            / (2 * np.pi * self.k0 * n2 * ct)
-        )  # todo
+            np.sqrt(ct * n1 / n2) # energy conservation on projection
+            * (-1j) * f
+            * np.exp(1j * self.k0 * n2 * f)
+            / (2 * np.pi * self.k0 * n2 * ct) # go to angular far field
+        )
         m[:, :, 0, 0] = (ts * sp * sp + tp * cp * cp * ct) * pref
         m[:, :, 1, 0] = m[:, :, 0, 1] = (-ts + tp * ct) * cp * sp * pref
         m[:, :, 1, 1] = (ts * cp * cp + tp * sp * sp * ct) * pref
-        # m[:, :, 2, 0] = tp * cp * st * pref
-        # m[:, :, 2, 1] = tp * sp * st * pref
         m[:, :, 2, 0] = -tp * cp * st * pref
-        m[:, :, 2, 1] = -tp * sp * st * pref  # todo
+        m[:, :, 2, 1] = -tp * sp * st * pref
 
         res = m @ self.grid.reshape(self.grid.shape + (1,))
         self.grid = res.reshape(self.grid.shape)
         self.coord = oldcoord
 
         if self.coord == "cartesian":
-            # self.pos[0] = -self.pos[0][:, ::-1] * self.k0 * n2 / f
-            # self.pos[1] = -self.pos[1][::-1, :] * self.k0 * n2 / f
-            self.pos[0] = self.pos[0] * self.k0 * n2 / f
-            self.pos[1] = self.pos[1] * self.k0 * n2 / f  # todo
+            self.pos[0] = -self.pos[0][:, ::-1] * self.k0 * n2 / f
+            self.pos[1] = -self.pos[1][::-1, :] * self.k0 * n2 / f
         else:
             self.pos[0] = self.pos[0] * self.k0 * n2 / f
-            # self.pos[1] = self.pos[1] + np.pi todo
+            self.pos[1] = self.pos[1] + np.pi
         self._space = "angular"
 
     @staticmethod
@@ -407,7 +396,7 @@ class Spectrum(Grid2D):
         res = []
         for z in zs:
             j = 0
-            while z > stack.zs[j] and j < len(stack.zs) - 1:  # todo: < or <=
+            while z >= stack.zs[j] and j < len(stack.zs) - 1:
                 j += 1
             field = stack.materials[j].ps.transpose((0, 1, 3, 2)) @ (
                 np.exp(1j * stack.materials[j].kzs * (z - stack.zs[j]))
