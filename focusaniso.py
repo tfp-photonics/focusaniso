@@ -3,8 +3,6 @@
 This module includes classes around the real and angular spectrum representations of
 light in stratified media. The media can have anisotropic permittivity and permeability.
 Additionally, the light can be focused by a lens.
-
-TODO citations
 """
 
 import itertools
@@ -639,6 +637,7 @@ def prop_mat(kzs, d):
     (N, N)-matrix
         Diagonal matrix of ``exp(-1j * kzs * d)``
     """
+    kzs = np.array(kzs)
     return np.diag(np.exp(-1j * kzs * d))
 
 
@@ -659,6 +658,8 @@ def dyn_mat(ps, qs):
     (4, 4)-matrix
         Tangential components as rows
     """
+    ps = np.array(ps)
+    qs = np.array(qs)
     res = np.empty((4, 4), np.complex)
     res[0, :] = ps[:, 0]
     res[1, :] = qs[:, 1]
