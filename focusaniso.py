@@ -246,11 +246,10 @@ class Spectrum(Grid2D):
         self.coord = oldcoord
 
         if self.coord == "cartesian":
-            self.pos[0] = -self.pos[0][:, ::-1] * self.k0 * n2 / f
-            self.pos[1] = -self.pos[1][::-1, :] * self.k0 * n2 / f
+            self.pos[0] = self.pos[0][:, ::-1] * self.k0 * n2 / f
+            self.pos[1] = self.pos[1][::-1, :] * self.k0 * n2 / f
         else:
             self.pos[0] = self.pos[0] * self.k0 * n2 / f
-            self.pos[1] = self.pos[1] + np.pi
         self._space = "angular"
 
     @staticmethod

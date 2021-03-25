@@ -93,14 +93,16 @@ in
 
 .. math::
 
-    \boldsymbol E_{\text{refr}}(f\vartheta, \varphi)
+    \boldsymbol E_{\text{refr}}(f\vartheta, \varphi + \pi)
     =
     \sqrt{\frac{n_1}{n_2} \cos\vartheta}
     (t_p \boldsymbol{\hat \vartheta} \otimes \boldsymbol{\hat \rho}
     + t_s \boldsymbol{\hat \varphi} \otimes \boldsymbol{\hat \varphi})
     \boldsymbol E_{\text{illu}}(\rho, \varphi)\,.
 
-Here, we also added possible transmission coefficients for the two polarizations.
+Here, we also added possible transmission coefficients for the two polarizations and we
+associated the refracted field with a ray in opposite direction using geometric
+optics approximation.
 
 This refracted field is assumed to be far away from the focus. We want to go to an
 angular spectrum at the focal point. So, we plug the results into the corresponding
