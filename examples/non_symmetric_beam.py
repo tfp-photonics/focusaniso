@@ -1,7 +1,10 @@
+"""
+This example is the focusing of a plane wave with oblique incidence. The resulting plot
+shows how the focus is shifted.
+"""
 import copy
 
 import numpy as np
-
 import matplotlib.pyplot as plt # Needed to plot the results
 
 import focusaniso as fa

@@ -1,3 +1,7 @@
+"""
+This example simulates three different polarization and how they are focused in a
+birefringent resist.
+"""
 import copy
 
 import numpy as np
@@ -19,10 +23,8 @@ rhos = np.linspace(0, f * na / n2, nrho)
 phis = np.linspace(0, 2 * np.pi * (1 - 1 / nphi), nphi)
 rhos, phis = np.meshgrid(rhos, phis)
 beams = []
-# beams.append((np.exp((-rhos * rhos) / (w * w)))[:,:,None] * np.array([1, 0, 0]))
 beams.append((np.exp((-rhos * rhos) / (w * w)))[:,:,None] * np.array([0, 1, 0]))
 beams.append((np.exp((-rhos * rhos) / (w * w)))[:,:,None] * np.dstack((-np.sin(phis), np.cos(phis), np.zeros_like(phis))))
-# beams.append((np.exp((-rhos * rhos) / (w * w)))[:,:,None] * np.dstack((np.cos(phis), np.sin(phis), np.zeros_like(phis))))
 beams.append((np.exp((-rhos * rhos) / (w * w)))[:,:,None] * np.array([1, 1j, 0]) * np.sqrt(0.5))
 
 # Material definitions
