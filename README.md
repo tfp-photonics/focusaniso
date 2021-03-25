@@ -4,11 +4,14 @@ A small tool to simulate focusing in anisotropic media
 
 ## Installation
 
-You can either just put the file `focusaniso.py` where you want it. The only dependency
-is `numpy`.
+You can simply put the file `focusaniso.py` where you want it. The only dependency is
+`numpy`.
 
-Alternatively, you can install the module with `pip install TODO`, for the documentation
-or test use `pip install TODO[docs]` or `pip install TODO[test]`.
+Alternatively, you can install the module with
+`pip install git+https://git.scc.kit.edu/tfpphotonics/focusaniso.git`. I'd advise to do
+this in a virtual environment. For the documentation and tests use
+`pip install -e git+https://git.scc.kit.edu/tfpphotonics/focusanis.git#egg=focusaniso[docs,test]`.
+Omit `docs` or `test`, if you only want one of them.
 
 ## Getting started
 
@@ -64,13 +67,12 @@ for i, s in enumerate(specs_probe):
     abs_sq_efield[:, i] = np.sum(np.power(np.abs(s.grid), 2), axis=-1)
 ```
 
-
-
-
 ## Documentation
 
 The documentation is created with sphinx. Run `make html` in the `docs` directory. Then,
 html files are found in `docs/_build/html/` with `index.html` being the starting page.
+You can also create a pdf file using latex with `make latexpdf` in the `docs` directory,
+which is put in `docs/_build/latex/focusaniso.pdf`
 
 ## Testing
 

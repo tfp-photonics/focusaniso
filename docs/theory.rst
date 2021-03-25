@@ -84,7 +84,7 @@ The radial component is refracted onto
 .. math::
 
     \boldsymbol{\hat \vartheta}
-    = (\cos\vartheta\cos\varphi, \cos\vartheta\sin\varphi, -\sin\vartheta)^{\mathrm T}
+    = (\cos\vartheta\cos\varphi, \cos\vartheta\sin\varphi, \sin\vartheta)^{\mathrm T}
 
 where :math:`\sin\vartheta = \frac{\rho}{f}` and :math:`f` the focal length of the lens.
 The azimuthal component is refracted onto itself. Additionally, we need to include

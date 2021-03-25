@@ -236,10 +236,10 @@ class Spectrum(Grid2D):
             / (2 * np.pi * self.k0 * n2 * ct)  # go to angular far field
         )
         m[:, :, 0, 0] = (ts * sp * sp + tp * cp * cp * ct) * pref
-        m[:, :, 1, 0] = m[:, :, 0, 1] = (-ts + tp * ct) * cp * sp * pref
+        m[:, :, 1, 0] = m[:, :, 0, 1] = (tp * ct - ts) * cp * sp * pref
         m[:, :, 1, 1] = (ts * cp * cp + tp * sp * sp * ct) * pref
-        m[:, :, 2, 0] = -tp * cp * st * pref
-        m[:, :, 2, 1] = -tp * sp * st * pref
+        m[:, :, 2, 0] = tp * cp * st * pref
+        m[:, :, 2, 1] = tp * sp * st * pref
 
         res = m @ self.grid.reshape(self.grid.shape + (1,))
         self.grid = res.reshape(self.grid.shape)

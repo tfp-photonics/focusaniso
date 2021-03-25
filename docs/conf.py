@@ -20,6 +20,7 @@ sys.path.insert(0, os.path.abspath('..'))
 project = 'focusaniso'
 copyright = '2021, Dominik Beutel'
 author = 'Dominik Beutel'
+version = '0.1'
 
 
 # -- General configuration ---------------------------------------------------
