@@ -126,12 +126,15 @@ class Grid2D:
             rhomeasure[:, 1:-1] = rhosq[:, 2:] - rhosq[:, :-2]
             rhomeasure[:, 0] = rhosq[:, 1] - rhosq[:, 0]
             rhomeasure[:, -1] = rhosq[:, -1] - rhosq[:, -2]
-            phidiff = np.mod(np.diff(
-                self.pos[1],
-                prepend=self.pos[1][-1, -1] - 2 * np.pi,
-                append=self.pos[1][0, -1] + 2 * np.pi,
-                axis=0,
-            ), 2 * np.pi)
+            phidiff = np.mod(
+                np.diff(
+                    self.pos[1],
+                    prepend=self.pos[1][-1, -1] - 2 * np.pi,
+                    append=self.pos[1][0, -1] + 2 * np.pi,
+                    axis=0,
+                ),
+                2 * np.pi,
+            )
             measure = 0.125 * rhomeasure * (phidiff[1:, :] + phidiff[:-1, :])
         measure = measure.reshape(measure.shape + (1,))
         return np.sum(self.grid * weights * measure, axis=(0, 1))
@@ -226,10 +229,11 @@ class Spectrum(Grid2D):
         st = rho / f
         ct = np.sqrt(1 - st * st)
         pref = (
-            np.sqrt(ct * n1 / n2) # energy conservation on projection
-            * (-1j) * f
+            np.sqrt(ct * n1 / n2)  # energy conservation on projection
+            * (-1j)
+            * f
             * np.exp(1j * self.k0 * n2 * f)
-            / (2 * np.pi * self.k0 * n2 * ct) # go to angular far field
+            / (2 * np.pi * self.k0 * n2 * ct)  # go to angular far field
         )
         m[:, :, 0, 0] = (ts * sp * sp + tp * cp * cp * ct) * pref
         m[:, :, 1, 0] = m[:, :, 0, 1] = (-ts + tp * ct) * cp * sp * pref
@@ -725,6 +729,7 @@ def poynting(ps, qs):
     (..., 3)-array
         Poynting vectors
     """
+    qs = np.array(qs)
     return 0.5 * np.real(np.cross(ps, qs.conj()))
 
 
@@ -801,7 +806,7 @@ def _multiplicity(xs, tol=1e-5):
     res = []
     mult = []
     for key, val in pairs.items():
-        if val < tol:
+        if val <= tol:
             res.append(0.5 * (xs[key[0]] + xs[key[1]]))
             mult.append(2)
         else:
@@ -828,7 +833,7 @@ def _evalpolymat(m, x):
         Evaluated matrix
     """
     shape = m.shape
-    res = np.array([i(x) for i in m.flatten()])
+    res = np.array([i(x) if isinstance(i, Polynomial) else i for i in m.flatten()])
     return res.reshape(shape)
 
 
