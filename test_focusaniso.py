@@ -85,11 +85,17 @@ def test_eigenmodes_degenerate():
 
 
 def test_eigenmodes_nondegenerate():
-    assert 0
+    m = np.diag([Polynomial([4, 0 , -1]), Polynomial([1, 0, -1]), 1])#
+    kzs, ps = fa._eigenmodes(m)
+    assert (
+        np.sum(kzs - np.array([-2, -1, 1, 2])) <= EPSSQ
+        and np.sum(np.abs(ps) - np.array([[1, 0, 0], [0, 1, 0], [0, 1, 0], [1, 0, 0]])) <= EPSSQ
+    )
 
 
 def test_sort_modes_error():
-    assert 0
+    with pytest.raises(Exception):
+        fa._sort_modes(np.zeros(4), np.zeros((4, 3)), np.zeros((4, 3)))
 
 
 def test_sort_modes_evanescent():
