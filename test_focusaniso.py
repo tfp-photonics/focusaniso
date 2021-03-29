@@ -99,79 +99,108 @@ def test_sort_modes_error():
 
 
 def test_sort_modes_evanescent():
-    assert 0
+    kzs = np.array([4j, 4j, -4j, -4j])
+    ps = np.array([[0, 1, 0], [-4j / 3, 0, 5 / 3], [0, 1, 0], [4j / 3, 0, 5 / 3]])
+    qs = np.array([[-4j / 3, 0, 5 / 3], [0, -1, 0], [4j / 3, 0, 5 / 3], [0, -1, 0]])
+    res = fa._sort_modes(kzs, ps, qs)
+    perm = [0, 2, 1, 3]
+    assert (
+        np.array_equal(res[0], kzs[perm])
+        and np.array_equal(res[1], ps[perm, :])
+        and np.array_equal(res[2], qs[perm, :])
+    )
 
 
 def test_sort_modes_1():
-    assert 0
+    kzs = np.array([1, 1, -1, -1])
+    ps = np.array([[0, 1, 0], [-1, 0, 0], [0, 1, 0], [1, 0, 0]])
+    qs = np.array([[-1, 0, 0], [0, -1, 0], [1, 0, 0], [0, -1, 0]])
+    res = fa._sort_modes(kzs, ps, qs)
+    perm = [0, 2, 1, 3]
+    assert (
+        np.array_equal(res[0], kzs[perm])
+        and np.array_equal(res[1], ps[perm, :])
+        and np.array_equal(res[2], qs[perm, :])
+    )
 
 
 def test_sort_modes_2():
-    assert 0
+    kzs = np.array([1, 1, -1, -1])
+    ps = np.array([[-1, 0, 0], [0, 1, 0], [0, 1, 0], [1, 0, 0]])
+    qs = np.array([[0, -1, 0], [-1, 0, 0], [1, 0, 0], [0, -1, 0]])
+    res = fa._sort_modes(kzs, ps, qs)
+    perm = [0, 3, 1, 2]
+    assert (
+        np.array_equal(res[0], kzs[perm])
+        and np.array_equal(res[1], ps[perm, :])
+        and np.array_equal(res[2], qs[perm, :])
+    )
 
 
 class TestGrid2D:
-    def test_constructor_2d():
+    def test_constructor_2d(self):
+        grid = fa.Grid2D(np.arange(4).reshape((2, 1, 2)), [-1, 1], 0)
+        assert np.array_equal(grid.grid, [[[0, 1, 0]], [[2, 3, 0]]])
+
+
+    def test_constructor(self):
         assert 0
 
-    def test_constructor():
+    def test_constructor_error(self):
         assert 0
 
-    def test_constructor_error():
+    def test_coord_to_polar(self):
         assert 0
 
-    def test_coord_to_polar():
+    def test_coord_to_cartesian(self):
         assert 0
 
-    def test_coord_to_cartesian():
-        assert 0
-
-    def test_integrate_polar():
+    def test_integrate_polar(self):
         # scalar weight
         assert 0
 
-    def test_integrate_cartesian():
+    def test_integrate_cartesian(self):
         # grid wight
         assert 0
 
 
 class TestSpectrum:
-    def test_constructor_error():
+    def test_constructor_error(self):
         assert 0
 
-    def test_focus():
+    def test_focus(self):
         assert 0
 
-    def test_setspace_to_polar():
+    def test_setspace_to_polar(self):
         assert 0
 
-    def test_setspace_to_cartesian():
+    def test_setspace_to_cartesian(self):
         assert 0
 
-    def test_field():
+    def test_field(self):
         assert 0
 
 
 class TestMaterial:
-    def test_constructor_error():
+    def test_constructor_error(self):
         assert 0
 
-    def test_constructor_scalar():
+    def test_constructor_scalar(self):
         assert 0
 
-    def test_modes():
+    def test_modes(self):
         assert 0
 
 
 class TestStack:
-    def test_constructor_error():
+    def test_constructor_error(self):
         assert 0
 
-    def test_constructor():
+    def test_constructor(self):
         assert 0
 
-    def test_modes():
+    def test_modes(self):
         assert 0
 
-    def test_solve():
+    def test_solve(self):
         assert 0
