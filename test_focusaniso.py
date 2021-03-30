@@ -142,12 +142,16 @@ class TestGrid2D:
         grid = fa.Grid2D(np.arange(4).reshape((2, 1, 2)), [-1, 1], 0)
         assert np.array_equal(grid.grid, [[[0, 1, 0]], [[2, 3, 0]]])
 
-
     def test_constructor(self):
-        assert 0
+        xs = np.arange(-5, 6)
+        xs, ys = np.meshgrid(xs, xs)
+        grid = np.exp(-xs * xs - ys * ys)[:, :, None] * np.array([1, 0, 0])
+        g = fa.Grid2D(grid, xs, ys)
+        assert np.array_equal(g.grid, grid) and np.array_equal(g.pos[0], xs) and np.array_equal(g.pos[1], ys)
 
     def test_constructor_error(self):
-        assert 0
+        with pytest.raises(ValueError):
+            fa.Grid2D(np.arange(3).reshape((1, 1, 3)), [0], [0], 'error')
 
     def test_coord_to_polar(self):
         assert 0
@@ -160,7 +164,7 @@ class TestGrid2D:
         assert 0
 
     def test_integrate_cartesian(self):
-        # grid wight
+        # grid weight
         assert 0
 
 
