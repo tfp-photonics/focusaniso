@@ -85,24 +85,10 @@ class Grid2D:
             ]
         self._coord = new
 
-    def integrate(self, weights=1):
-        """Integrate the grid values with some weights
-
-        Parameters
-        ----------
-        weights : (N, M)- or (N, M, P)-array or scalar
-            weights for each lattice point or each element in the integration of the
-            grid values
-
-        Returns
-        -------
-        (3)-array
-            Integration result
-
+    def _integration_measure(self):
+        """Compute the integration measure for the given grid depending on the
+        coordinate system
         """
-        weights = np.array(weights)
-        if weights.ndim == 2:
-            weights = weights.reshape(weights.shape + (1,))
         self.coord = self._origcoord
         if self._coord == "cartesian":
             xdiff = np.diff(
@@ -136,7 +122,28 @@ class Grid2D:
                 2 * np.pi,
             )
             measure = 0.125 * rhomeasure * (phidiff[1:, :] + phidiff[:-1, :])
-        measure = measure.reshape(measure.shape + (1,))
+        return measure
+
+    def integrate(self, weights=1):
+        """Integrate the grid values with some weights
+
+        Parameters
+        ----------
+        weights : (N, M)- or (N, M, P)-array or scalar
+            weights for each lattice point or each element in the integration of the
+            grid values
+
+        Returns
+        -------
+        (3)-array
+            Integration result
+
+        """
+        weights = np.array(weights)
+        if weights.ndim == 2:
+            weights = weights.reshape(weights.shape + (1,))
+        measure = self._integration_measure()
+        measure =  measure.reshape(measure.shape + (1,))
         return np.sum(self.grid * weights * measure, axis=(0, 1))
 
     @staticmethod
