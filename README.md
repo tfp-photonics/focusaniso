@@ -10,7 +10,7 @@ You can simply put the file `focusaniso.py` where you want it. The only dependen
 Alternatively, you can install the module with
 `pip install git+https://git.scc.kit.edu/photonics/focusaniso.git`. I'd advise to do
 this in a virtual environment. For the documentation and tests use
-`pip install -e git+https://git.scc.kit.edu/photonics/focusanis.git#egg=focusaniso[docs,test]`.
+`pip install -e git+https://git.scc.kit.edu/photonics/focusaniso.git#egg=focusaniso[docs,test]`.
 Omit `docs` or `test`, if you only want one of them.
 
 ## Getting started
