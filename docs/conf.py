@@ -12,6 +12,7 @@
 #
 import os
 import sys
+from importlib.metadata import version
 sys.path.insert(0, os.path.abspath('..'))
 
 
@@ -20,7 +21,8 @@ sys.path.insert(0, os.path.abspath('..'))
 project = 'focusaniso'
 copyright = '2021, Dominik Beutel'
 author = 'Dominik Beutel'
-version = '0.1'
+release = version('focusaniso')
+version = '.'.join(release.split('.')[:2])
 
 
 # -- General configuration ---------------------------------------------------
