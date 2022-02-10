@@ -581,6 +581,11 @@ class Stack:
             Relation of the two input modes with reflected (third index 0 and 2) and
             transmitted (third index 1 and 2) modes
         """
+        kxs = np.array(kxs)
+        kys = np.array(kys)
+        if kxs.ndim <= 1 and kys.ndim <= 1:
+            kxs, kys = list(np.meshgrid(kxs, kys))
+
         if modes:
             self.modes(k0, kxs, kys)
         ds = np.diff(self.zs, prepend=0)
