@@ -19,7 +19,7 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'focusaniso'
-copyright = '2021, Dominik Beutel'
+copyright = '2023, Dominik Beutel'
 author = 'Dominik Beutel'
 release = version('focusaniso')
 version = '.'.join(release.split('.')[:2])
